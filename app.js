@@ -553,3 +553,22 @@ function cargarTips() {
     </div>
   `).join('');
 }
+
+// Mensaje motivacional según la hora
+function actualizarMensajeMotivacional() {
+  const hour = new Date().getHours();
+  
+  const msgs = hour === 8 
+    ? [
+        "Build Cars. Master Driving. Tu aprobación del carnet empieza hoy.", 
+        "50 preguntas = 500 puntos. Ve a por ellos."
+      ]
+    : [
+        "¿Progreso para el carnet hoy? Si no avanzas, retrocedes.", 
+        "El garaje no se llena solo. Cierra el día fuerte."
+      ];
+
+  const msg = msgs[Math.floor(Math.random() * msgs.length)];
+  const el = document.getElementById('motivacion');
+  if (el) el.textContent = msg;
+}
