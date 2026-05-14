@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>GasDrive V7</title>
+  <title>GasDrive V7.2</title>
   <link rel="manifest" href="manifest.json">
   <meta name="theme-color" content="#00D9FF">
   <style>
@@ -16,7 +16,7 @@
    .tabs{position:fixed;bottom:0;left:0;right:0;background:#111;border-top:1px solid #222;display:flex;z-index:100}
    .tab-btn{flex:1;padding:12px 4px;background:none;border:none;color:#666;font-size:11px;cursor:pointer;transition:0.2s}
    .tab-btn.active{color:#00D9FF;background:#1a1a1a}
-   .tab-btn.emoji{font-size:20px;display:block;margin-bottom:4px}
+   .tab-btn .emoji{font-size:20px;display:block;margin-bottom:4px}
    .tab-content{display:none;padding:15px;animation:fadeIn 0.3s}
    .tab-content.active{display:block}
     @keyframes fadeIn{from{opacity:0}to{opacity:1}}
@@ -45,11 +45,19 @@
     @keyframes bounceIn{0%{transform:scale(0)}50%{transform:scale(1.2)}100%{transform:scale(1)}}
    .progress-bar{background:#222;height:8px;border-radius:4px;margin:8px 0;overflow:hidden}
    .progress-fill{background:linear-gradient(90deg,#00D9FF,#0f5);height:100%;transition:width 0.3s}
+   .garage-car{background:#222;border:2px solid #333;border-radius:12px;padding:15px;margin-bottom:10px;text-align:center}
+   .garage-car.locked{opacity:0.4}
+   .emoji-item{background:#222;border:2px solid #333;border-radius:12px;padding:12px;text-align:center}
+   .emoji-item.owned{border-color:#0f5;background:#0a4}
+   .emoji-item.locked{opacity:0.4}
+   .emoji-big{font-size:36px;margin-bottom:8px}
+   .btn-buy{background:#00D9FF;color:#000;border:none;padding:8px 12px;border-radius:8px;font-weight:700;margin-top:8px;width:100%;cursor:pointer}
+   .btn-buy:disabled{background:#444;color:#666;cursor:not-allowed}
   </style>
 </head>
 <body>
   <div class="header">
-    <h1>GASDRIVE V7 🚘</h1>
+    <h1>GASDRIVE V7.2 🚘</h1>
     <div class="subtitle">300 Preguntas DGT 2026. Offline. Gratis<span class="coins" id="coins">💰 0</span></div>
   </div>
 
@@ -153,23 +161,24 @@
   <div id="tab-garage" class="tab-content">
     <div class="card">
       <h2>🏁 MI GARAGE</h2>
-      <div id="garage-lista">Próximamente</div>
+      <div id="garage-score" style="text-align:center;margin-bottom:15px;font-size:20px;color:#00D9FF;"></div>
+      <div id="garage-lista"></div>
     </div>
   </div>
 
   <!-- TIENDA -->
   <div id="tab-tienda" class="tab-content">
     <div class="card">
-      <h2>🛒 TIENDA</h2>
-      <div id="tienda-lista">Próximamente</div>
+      <h2>🛒 TIENDA DE EMOJIS</h2>
+      <div id="emoji-tienda" style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;"></div>
     </div>
   </div>
 
   <!-- TIPS -->
   <div id="tab-tips" class="tab-content">
     <div class="card">
-      <h2>💡 CONSEJOS</h2>
-      <div id="tips-lista">Próximamente</div>
+      <h2>💡 CONSEJOS RÁPIDOS</h2>
+      <div id="tips-lista"></div>
     </div>
   </div>
 
