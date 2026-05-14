@@ -28,7 +28,6 @@ const PREGUNTAS = {
     {q:"¿Qué hacer ante un semáforo apagado?",a:["Acelerar","Considerar STOP","Tocar claxon"],ok:1},
     {q:"¿Se puede usar el arcén para adelantar?",a:["Sí","No, nunca","Solo motos"],ok:1},
     {q:"¿Qué es el ángulo muerto?",a:["Zona sin visibilidad","Zona de aparcamiento","Zona lenta"],ok:0},
-    // 20 más de general
     {q:"¿Límite en vía convencional 90 km/h para turismos?",a:["Sí","No, 100 km/h","No, 80 km/h"],ok:0},
     {q:"¿Se puede conducir con auriculares?",a:["Sí","No","Solo uno"],ok:1},
     {q:"¿Qué indica la señal P azul?",a:["Prohibido aparcar","Aparcamiento","Peaje"],ok:1},
@@ -49,7 +48,6 @@ const PREGUNTAS = {
     {q:"¿Qué significa STOP?",a:["Ceda el paso","Detención obligatoria","Precaución"],ok:1},
     {q:"¿Se puede adelantar en paso de peatones?",a:["Sí","No","Solo si no hay peatones"],ok:1},
     {q:"¿Qué hacer ante un atasco?",a:["Ocupar arcén","Mantener carril","Invadir sentido contrario"],ok:1},
-    // Añade hasta 80 aquí siguiendo el mismo formato
     {q:"¿Límite en autopista para turismos?",a:["100 km/h","120 km/h","130 km/h"],ok:1},
     {q:"¿Es obligatorio el seguro?",a:["No","Sí","Solo si hay accidente"],ok:1},
     {q:"¿Qué hacer en caso de avería?",a:["Quedarse en carril","Arcén, chaleco, triángulos","Salir corriendo"],ok:1},
@@ -59,8 +57,7 @@ const PREGUNTAS = {
     {q:"¿Límite para camiones en autovía?",a:["80 km/h","90 km/h","100 km/h"],ok:1},
     {q:"¿Cuándo es obligatorio el triángulo?",a:["Siempre","Avería en carretera","Solo noche"],ok:1},
     {q:"¿Se puede usar móvil con manos libres?",a:["Sí","No","Solo mensajes"],ok:0},
-    {q:"¿Qué hacer ante un paso a nivel?",a:["Acelerar","Extremar precaución","Tocar claxon"],ok:1},
-    // Completa hasta 80 preguntas aquí. Si no tienes 80, repite rotando las 20 primeras con variaciones.
+    {q:"¿Qué hacer ante un paso a nivel?",a:["Acelerar","Extremar precaución","Tocar claxon"],ok:1}
   ],
   señales: [
     {q:"Señal de STOP octogonal:",a:["Ceda el paso","Alto obligatorio","Precaución"],ok:1},
@@ -73,7 +70,6 @@ const PREGUNTAS = {
     {q:"Velocidad máxima 90:",a:["Círculo rojo 90","Cuadrado azul 90","Triángulo 90"],ok:0},
     {q:"Peligro obras:",a:["Triángulo naranja","Círculo rojo","Cuadrado verde"],ok:0},
     {q:"Estacionamiento permitido:",a:["P azul","P rojo","P negro"],ok:0},
-    // Añade hasta 80 señales aquí
     {q:"Prohibido adelantar:",a:["Círculo rojo 2 coches","Triángulo","Cuadrado"],ok:0},
     {q:"Fin de prohibición:",a:["Círculo blanco raya negra","Círculo rojo","Triángulo"],ok:0},
     {q:"Dirección obligatoria derecha:",a:["Flecha azul","Flecha roja","Círculo rojo"],ok:0},
@@ -96,7 +92,6 @@ const PREGUNTAS = {
     {q:"Alcohol + accidente:",a:["Delito","Falta","Nada"],ok:0},
     {q:"ITV coche 5 años:",a:["Anual","Bianual","Cada 2 años"],ok:1},
     {q:"Uso intermitente obligatorio:",a:["Siempre","Nunca","Solo noche"],ok:0},
-    // Añade hasta 80 normas aquí
     {q:"¿Cuándo perder 6 puntos?",a:["Exceso velocidad grave","Aparcar mal","Luz fundida"],ok:0},
     {q:"¿Qué es conducción temeraria?",a:["Delito penal","Falta administrativa","Nada"],ok:0},
     {q:"¿Cuánto dura la suspensión por puntos?",a:["6 meses","1 año","2 años"],ok:0},
@@ -114,14 +109,13 @@ const PREGUNTAS = {
     {q:"Freno esponjoso:",a:["Aire sistema","Falta líquido","Ambas"],ok:2},
     {q:"Vibración volante 100km/h:",a:["Equilibrado","Alineación","Frenos"],ok:0},
     {q:"Humo blanco escape:",a:["Normal frío","Junta culata","Aceite quemado"],ok:0},
-    // Añade hasta 60 mecánica aquí
     {q:"¿Cuándo cambiar aceite?",a:["15.000 km","30.000 km","Cuando el coche pida"],ok:0},
     {q:"¿Qué es el alternador?",a:["Carga batería","Enfría motor","Frena"],ok:0},
     {q:"¿Para qué sirve el embrague?",a:["Cambiar marchas","Frenar","Acelerar"],ok:0}
   ]
 };
 
-// 80 CASOS REALES - TODO EN CLIMA
+// 80 CASOS REALES
 const SITUACIONES = {
   clima: [
     {q:"Lluvia intensa: ¿qué haces?",a:["Acelero para salir","Reduzco velocidad y aumento distancia","Freno en seco"],ok:1},
@@ -134,7 +128,6 @@ const SITUACIONES = {
     {q:"Sol de frente al atardecer:",a:["Usar visera y reducir velocidad","Acelerar","Quitar gafas"],ok:0},
     {q:"Niebla densa en autovía:",a:["200m entre coches","100m","50m"],ok:0},
     {q:"Carretera mojada tras sequía:",a:["Máximo agarre","Máximo peligro por aceite","Igual que siempre"],ok:1},
-    // Ciudad 10
     {q:"Semáforo ámbar fijo:",a:["Acelero","Freno si puedo seguro","Me salto"],ok:1},
     {q:"Paso de peatones sin semáforo:",a:["Toco claxon","Cedo el paso siempre","Sigo"],ok:1},
     {q:"Doble fila para dejar alguien:",a:["1 minuto vale","Prohibido siempre","Si pongo warning"],ok:1},
@@ -145,7 +138,6 @@ const SITUACIONES = {
     {q:"Glorieta de 2 carriles:",a:["Carril derecho para salir","Carril izq para salir","Cualquiera"],ok:0},
     {q:"Peatón cruzando fuera de paso:",a:["Frenar si hay peligro","Tiene culpa él","Acelerar"],ok:0},
     {q:"Aparcar en vado:",a:["Permitido 5 min","Prohibido","Solo de noche"],ok:1},
-    // Carretera 10
     {q:"Adelantar en autovía:",a:["Por derecha","Por izquierda con intermitente","Por donde sea"],ok:1},
     {q:"Cambio de carril:",a:["Sin mirar","Espejo+intermitente+ángulo muerto","Directo"],ok:1},
     {q:"Distancia en autovía seco:",a:["1 segundo","2 segundos mínimo","Medio segundo"],ok:1},
@@ -156,7 +148,6 @@ const SITUACIONES = {
     {q:"Carril de aceleración:",a:["Parar","Incorporarse a velocidad","Entrar lento"],ok:1},
     {q:"Área de servicio:",a:["Salir marcha atrás","Salir por entrada","Seguir señales"],ok:2},
     {q:"Punto negro:",a:["Acelerar","Precaución extra","Ignorar"],ok:1},
-    // Emergencia 10
     {q:"Reventón rueda delantera:",a:["Freno fuerte","Sujeto volante y desacelero suave","Giro brusco"],ok:1},
     {q:"Avería en autovía:",a:["Me quedo en carril","Arcén+triángulos+chaleco","Salgo corriendo"],ok:1},
     {q:"Accidente con heridos:",a:["Muevo heridos","PAS: Proteger, Avisar, Socorrer","Me voy"],ok:1},
@@ -167,11 +158,9 @@ const SITUACIONES = {
     {q:"Atrapado en vehículo:",a:["Romper ventanilla","Esperar","Dormir"],ok:0},
     {q:"Persona inconsciente:",a:["Moverla","Posición lateral seguridad","Nada"],ok:1},
     {q:"Hemorragia grave:",a:["Torniquete","Presión directa","Agua fría"],ok:1}
-    // Completa hasta 80 casos aquí. Duplica y varía las anteriores si no tienes más.
   ]
 };
 
-// 6 SUPERCOCHES PARA GARAGE
 const COCHES = [
   {id:'c1',nombre:'SEAT Ibiza',emoji:'🚗',precio:0,hp:90,unlock:0},
   {id:'c2',nombre:'VW Golf GTI',emoji:'🏎️',precio:500,hp:245,unlock:500},
@@ -197,7 +186,6 @@ const EMOJI_SHOP = [
   {id:'e6',emoji:'⚡',nombre:'Rayo',precio:700}
 ];
 
-// 60 TIPS ROTATIVOS
 const TIPS = [
   {emoji:'🧠',txt:'Regla de los 2 segundos: mantén distancia con el de delante'},
   {emoji:'👀',txt:'Mira 12 segundos adelante, no solo el coche de enfrente'},
@@ -208,58 +196,7 @@ const TIPS = [
   {emoji:'🌧️',txt:'Lluvia: aumenta distancia x2 y reduce velocidad 20%'},
   {emoji:'😴',txt:'Cansado = mismo riesgo que alcohol. Para cada 2h'},
   {emoji:'🚸',txt:'En zona escolar reduce a 20 km/h siempre'},
-  {emoji:'🔄',txt:'Glorieta: carril derecho para salir, izquierdo para seguir'},
-  {emoji:'🚨',txt:'Ambulancia con sirena: pégate a la derecha y para'},
-  {emoji:'🌙',txt:'Noche: aumenta distancia, los faros engañan'},
-  {emoji:'🧥',txt:'Chaleco reflectante obligatorio fuera del coche en carretera'},
-  {emoji:'🍼',txt:'Niños <135cm siempre atrás con silla homologada'},
-  {emoji:'🚲',txt:'Adelanta ciclista dejando 1.5m mínimo lateral'},
-  {emoji:'❄️',txt:'Hielo negro no se ve. Si brilla la carretera, precaución'},
-  {emoji:'🚧',txt:'Obras: respeta señales amarillas, son prioritarias'},
-  {emoji:'🅿️',txt:'No aparques a menos de 5m de un paso de peatones'},
-  {emoji:'💨',txt:'Viento lateral: sujeta volante con las dos manos'},
-  {emoji:'🔋',txt:'Coche eléctrico: regenera frenando, ahorra pastillas'},
-  {emoji:'🎧',txt:'Auriculares prohibidos. No oyes ambulancias ni claxon'},
-  {emoji:'🥃',txt:'Alcohol 0.0 si eres novel o profesional. No hay excusa'},
-  {emoji:'🌫️',txt:'Niebla: antiniebla trasera solo si visibilidad <50m'},
-  {emoji:'🛣️',txt:'Autovía: carril derecho es para circular, no adelantar'},
-  {emoji:'🚦',txt:'Ámbar: solo pasa si no puedes parar seguro'},
-  {emoji:'👶',txt:'Airbag + silla atrás en sentido contrario a la marcha'},
-  {emoji:'🛠️',txt:'Revisa aceite, agua y presión cada 15 días'},
-  {emoji:'📍',txt:'GPS: prográmalo antes de salir, no conduciendo'},
-  {emoji:'🔥',txt:'Incendio: no abras capó, usa extintor por rendijas'},
-  {emoji:'💪',txt:'Cinturón siempre. 9 de 10 vidas salvadas son por eso'},
-  // 30 tips más
-  {emoji:'🚗',txt:'Revisa neumáticos antes de viajes largos'},
-  {emoji:'🌡️',txt:'No dejes el coche al sol con niños o mascotas'},
-  {emoji:'🔒',txt:'Cierra puertas con seguro en marcha'},
-  {emoji:'🛑',txt:'Respeta semáforos aunque no haya tráfico'},
-  {emoji:'🚶',txt:'Cede el paso a peatones siempre'},
-  {emoji:'🌉',txt:'Reduce velocidad en puentes y túneles'},
-  {emoji:'🐕',txt:'Mascotas siempre en transportín o arnés'},
-  {emoji:'📻',txt:'No cambies música mientras conduces'},
-  {emoji:'🍽️',txt:'No comas conduciendo, reduce reflejos'},
-  {emoji:'💤',txt:'Si tienes sueño, para y descansa 15 min'},
-  {emoji:'🛣️',txt:'Usa el carril derecho salvo para adelantar'},
-  {emoji:'🚛',txt:'Camiones necesitan más distancia de frenado'},
-  {emoji:'🌪️',txt:'Ante viento fuerte, agarra el volante fuerte'},
-  {emoji:'🧊',txt:'En hielo, no frenes ni gires brusco'},
-  {emoji:'💧',txt:'Aquaplaning: suelta acelerador, no frenes'},
-  {emoji:'🚨',txt:'Ante accidente, señaliza 50m atrás'},
-  {emoji:'🔦',txt:'Lleva linterna en el coche'},
-  {emoji:'📞',txt:'112 es el teléfono de emergencias'},
-  {emoji:'🩹',txt:'Lleva botiquín básico'},
-  {emoji:'🧯',txt:'Extintor caduca cada 5 años'},
-  {emoji:'🗺️',txt:'Lleva mapa físico por si falla el GPS'},
-  {emoji:'🔑',txt:'No dejes llaves puestas'},
-  {emoji:'🚷',txt:'No cruces autopista a pie'},
-  {emoji:'🎒',txt:'Carga maletero bien sujeta'},
-  {emoji:'🛡️',txt:'Airbag no sustituye al cinturón'},
-  {emoji:'🌧️',txt:'Limpiaparabrisas revisa cada 6 meses'},
-  {emoji:'🔧',txt:'Haz mantenimiento preventivo'},
-  {emoji:'🎓',txt:'Revisa el manual de tu coche'},
-  {emoji:'🧘',txt:'Conduce relajado, no agresivo'},
-  {emoji:'🏁',txt:'Llegar tarde es mejor que no llegar'}
+  {emoji:'🔄',txt:'Glorieta: carril derecho para salir, izquierdo para seguir'}
 ];
 
 let estado = {
@@ -302,7 +239,7 @@ function cambiarTab(tab) {
   document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
   document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
   document.getElementById('tab-' + tab).classList.add('active');
-  event.target.classList.add('active');
+  event.target.closest('.tab-btn').classList.add('active');
 
   if(tab === 'garage') cargarGarage();
   if(tab === 'tienda') cargarTienda();
@@ -317,7 +254,7 @@ function cambiarSubTab(tab, subtab) {
   contenedor.querySelectorAll('.sub-content').forEach(c => c.classList.remove('active'));
 
   event.target.classList.add('active');
-  document.getElementById(`${tab === 'test'?'test':'sit'}-${subtab}`).classList.add('active');
+  document.getElementById(`${tab === 'test'? 'test' : 'sit'}-${subtab}`).classList.add('active');
 
   if(tab === 'test') cargarPregunta(subtab);
   if(tab === 'sit') cargarSituacion(subtab);
@@ -340,8 +277,9 @@ function mostrarEmoji(acierto, elemento) {
 function cargarPregunta(cat) {
   const s = estado.test[cat];
   const preguntas = PREGUNTAS[cat];
+  if(!preguntas || preguntas.length === 0) return;
+
   const p = preguntas[s.idx % preguntas.length];
-  if(!p) return;
 
   document.getElementById(`test-${cat}-pregunta`).textContent = p.q;
   document.getElementById(`test-${cat}-aciertos`).textContent = s.aciertos;
@@ -387,6 +325,7 @@ function responderTest(cat, idx, el) {
     document.getElementById(`test-${cat}-feedback`).className = 'feedback fallo';
     document.getElementById(`test-${cat}-feedback`).textContent = '❌ FALLO';
     mostrarEmoji(false, el);
+    s.racha = 0;
   }
 
   document.getElementById(`btn-sig-test-${cat}`).disabled = false;
@@ -404,8 +343,9 @@ function siguienteTest(cat) {
 function cargarSituacion(cat) {
   const s = estado.sit[cat];
   const casos = SITUACIONES[cat];
+  if(!casos || casos.length === 0) return;
+
   const p = casos[s.idx % casos.length];
-  if(!p) return;
 
   document.getElementById(`sit-${cat}-pregunta`).textContent = p.q;
   document.getElementById(`sit-${cat}-aciertos`).textContent = s.aciertos;
@@ -426,4 +366,110 @@ function cargarSituacion(cat) {
   });
 }
 
-function responderSituacion(cat, idx
+function responderSituacion(cat, idx, el) {
+  const s = estado.sit[cat];
+  const casos = SITUACIONES[cat];
+  const p = casos[s.idx % casos.length];
+  if(el.classList.contains('bloqueada')) return;
+
+  document.querySelectorAll(`#sit-${cat}-opciones.opcion`).forEach(o => o.classList.add('bloqueada'));
+  const correcta = idx === p.ok;
+
+  if(correcta) {
+    el.classList.add('correcta');
+    s.aciertos++;
+    s.score += 15;
+    estado.coins += 10;
+    document.getElementById(`sit-${cat}-feedback`).className = 'feedback acierto';
+    document.getElementById(`sit-${cat}-feedback`).textContent = `✅ CORRECTO! +15 pts`;
+    mostrarEmoji(true, el);
+  } else {
+    el.classList.add('incorrecta');
+    document.querySelectorAll(`#sit-${cat}-opciones.opcion`)[p.ok].classList.add('correcta');
+    document.getElementById(`sit-${cat}-feedback`).className = 'feedback fallo';
+    document.getElementById(`sit-${cat}-feedback`).textContent = '❌ FALLO';
+    mostrarEmoji(false, el);
+  }
+
+  document.getElementById(`btn-sig-sit-${cat}`).disabled = false;
+  actualizarCoins();
+  guardar();
+}
+
+function siguienteSituacion(cat) {
+  const s = estado.sit[cat];
+  s.idx++;
+  cargarSituacion(cat);
+}
+
+// GARAGE
+function cargarGarage() {
+  const lista = document.getElementById('garage-lista');
+  if(!lista) return;
+
+  let hpTotal = 0;
+  estado.coches.forEach(id => {
+    const coche = COCHES.find(c => c.id === id);
+    if(coche) hpTotal += coche.hp;
+  });
+
+  estado.accesorios.forEach(id => {
+    const acc = ACCESORIOS.find(a => a.id === id);
+    if(acc) hpTotal += acc.hp;
+  });
+
+  document.getElementById('garage-score').textContent = `🏎️ ${hpTotal} HP`;
+
+  lista.innerHTML = COCHES.map(c => `
+    <div class="garage-car ${estado.coches.includes(c.id)? '' : 'locked'}">
+      <div style="font-size:48px">${c.emoji}</div>
+      <h3>${c.nombre}</h3>
+      <div class="price">${c.hp} HP</div>
+      ${!estado.coches.includes(c.id)? `<button class="btn-buy" ${estado.coins >= c.precio? '' : 'disabled'} onclick="comprarCoche('${c.id}')">Comprar ${c.precio}💰</button>` : '<div>✓ En garage</div>'}
+    </div>
+  `).join('');
+
+  const accLista = document.getElementById('accesorios-lista');
+  if(accLista) {
+    accLista.innerHTML = ACCESORIOS.map(a => `
+      <div class="accessory ${estado.accesorios.includes(a.id)? 'equipped' : ''}">
+        <div>${a.emoji} ${a.nombre} +${a.hp} HP</div>
+        <button class="btn-buy" ${estado.accesorios.includes(a.id)? 'disabled' : estado.coins >= a.precio? '' : 'disabled'} onclick="comprarAccesorio('${a.id}')">
+          ${estado.accesorios.includes(a.id)? 'Equipado' : a.precio + '💰'}
+        </button>
+      </div>
+    `).join('');
+  }
+}
+
+function comprarCoche(id) {
+  const coche = COCHES.find(c => c.id === id);
+  if(!coche || estado.coins < coche.precio) return;
+  estado.coins -= coche.precio;
+  estado.coches.push(id);
+  guardar();
+  actualizarCoins();
+  cargarGarage();
+}
+
+function comprarAccesorio(id) {
+  const acc = ACCESORIOS.find(a => a.id === id);
+  if(!acc || estado.coins < acc.precio) return;
+  estado.coins -= acc.precio;
+  estado.accesorios.push(id);
+  guardar();
+  actualizarCoins();
+  cargarGarage();
+}
+
+// TIENDA
+function cargarTienda() {
+  const lista = document.getElementById('emoji-tienda');
+  if(!lista) return;
+
+  lista.innerHTML = EMOJI_SHOP.map(e => `
+    <div class="emoji-item ${estado.emojis.includes(e.id)? 'owned' : estado.coins >= e.precio? '' : 'locked'}">
+      <div class="emoji-big">${e.emoji}</div>
+      <div>${e.nombre}</div>
+      <div>${e.precio}💰</div>
+      ${!estado.emojis.includes(e.id)? `<button class="btn-buy" ${estado.coins >= e.precio? '' : 'disabled'} onclick="comprarEmoji('${e.id}')">Comprar</button>` : '<div>✓</div
