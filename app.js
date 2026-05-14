@@ -305,7 +305,9 @@ function cambiarTab(tab) {
   if(tab === 'garage') cargarGarage();
   if(tab === 'tienda') cargarTienda();
   if(tab === 'tips') cargarTips();
-  if(tab === 'test') cargarPregunta('general');
+  if(tab === 'test'){
+actualizarMensajeMotivacional();
+cargarPregunta('general');
   if(tab === 'situaciones') cargarSituacion('clima');
 }
 
