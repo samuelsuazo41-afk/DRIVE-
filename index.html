@@ -205,11 +205,29 @@
 
 <script src="app.js"></script>
 
-   <script>
-   if ('serviceWorker' in navigator) {
-     navigator.serviceWorker.register('./sw.js');
-   }
-   </script>
+<script>
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('./sw.js');
+}
+</script>
+
+<!-- ONESIGNAL NOTIFICACIONES -->
+<script src="https://cdn.onesignal.com/sdks/web/v16/OneSignalSDK.page.es6.js" defer></script>
+<script>
+  window.OneSignalDeferred = window.OneSignalDeferred || [];
+  OneSignalDeferred.push(async function(OneSignal) {
+    await OneSignal.init({
+      appId: "TU_APP_ID",
+      safari_web_id: "",
+      notifyButton: {
+        enable: false
+      }
+    });
+    
+    // Pedir permiso de notificaciones la primera vez
+    OneSignal.Notifications.requestPermission();
+  });
+</script>
 
 </body>
 </html>
