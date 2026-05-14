@@ -307,7 +307,7 @@ function responderTest(cat, idx, el) {
   const p = preguntas[s.idx % preguntas.length];
   if(el.classList.contains('bloqueada')) return;
 
-  document.querySelectorAll(`#test-${cat}-opciones.opcion`).forEach(o => o.classList.add('bloqueada'));
+  document.querySelectorAll(`#test-${cat}-opciones .opcion`).forEach(o => o.classList.add('bloqueada'));
   const correcta = idx === p.ok;
 
   if(correcta) {
@@ -321,7 +321,7 @@ function responderTest(cat, idx, el) {
     mostrarEmoji(true, el);
   } else {
     el.classList.add('incorrecta');
-    document.querySelectorAll(`#test-${cat}-opciones.opcion`)[p.ok].classList.add('correcta');
+    document.querySelectorAll(`#test-${cat}-opciones .opcion`)[p.ok].classList.add('correcta');
     document.getElementById(`test-${cat}-feedback`).className = 'feedback fallo';
     document.getElementById(`test-${cat}-feedback`).textContent = '❌ FALLO';
     mostrarEmoji(false, el);
@@ -372,7 +372,7 @@ function responderSituacion(cat, idx, el) {
   const p = casos[s.idx % casos.length];
   if(el.classList.contains('bloqueada')) return;
 
-  document.querySelectorAll(`#sit-${cat}-opciones.opcion`).forEach(o => o.classList.add('bloqueada'));
+  document.querySelectorAll(`#sit-${cat}-opciones .opcion`).forEach(o => o.classList.add('bloqueada'));
   const correcta = idx === p.ok;
 
   if(correcta) {
@@ -385,7 +385,7 @@ function responderSituacion(cat, idx, el) {
     mostrarEmoji(true, el);
   } else {
     el.classList.add('incorrecta');
-    document.querySelectorAll(`#sit-${cat}-opciones.opcion`)[p.ok].classList.add('correcta');
+    document.querySelectorAll(`#sit-${cat}-opciones .opcion`)[p.ok].classList.add('correcta');
     document.getElementById(`sit-${cat}-feedback`).className = 'feedback fallo';
     document.getElementById(`sit-${cat}-feedback`).textContent = '❌ FALLO';
     mostrarEmoji(false, el);
@@ -418,7 +418,8 @@ function cargarGarage() {
     if(acc) hpTotal += acc.hp;
   });
 
-  document.getElementById('garage-score').textContent = `🏎️ ${hpTotal} HP`;
+  const scoreEl = document.getElementById('garage-score');
+  if(scoreEl) scoreEl.textContent = `🏎️ ${hpTotal} HP`;
 
   lista.innerHTML = COCHES.map(c => `
     <div class="garage-car ${estado.coches.includes(c.id)? '' : 'locked'}">
@@ -428,18 +429,6 @@ function cargarGarage() {
       ${!estado.coches.includes(c.id)? `<button class="btn-buy" ${estado.coins >= c.precio? '' : 'disabled'} onclick="comprarCoche('${c.id}')">Comprar ${c.precio}💰</button>` : '<div>✓ En garage</div>'}
     </div>
   `).join('');
-
-  const accLista = document.getElementById('accesorios-lista');
-  if(accLista) {
-    accLista.innerHTML = ACCESORIOS.map(a => `
-      <div class="accessory ${estado.accesorios.includes(a.id)? 'equipped' : ''}">
-        <div>${a.emoji} ${a.nombre} +${a.hp} HP</div>
-        <button class="btn-buy" ${estado.accesorios.includes(a.id)? 'disabled' : estado.coins >= a.precio? '' : 'disabled'} onclick="comprarAccesorio('${a.id}')">
-          ${estado.accesorios.includes(a.id)? 'Equipado' : a.precio + '💰'}
-        </button>
-      </div>
-    `).join('');
-  }
 }
 
 function comprarCoche(id) {
@@ -472,4 +461,30 @@ function cargarTienda() {
       <div class="emoji-big">${e.emoji}</div>
       <div>${e.nombre}</div>
       <div>${e.precio}💰</div>
-      ${!estado.emojis.includes(e.id)? `<button class="btn-buy" ${estado.coins >= e.precio? '' : 'disabled'} onclick="comprarEmoji('${e.id}')">Comprar</button>` : '<div>✓</div
+      ${!estado.emojis.includes(e.id)? `<button class="btn-buy" ${estado.coins >= e.precio? '' : 'disabled'} onclick="comprarEmoji('${e.id}')">Comprar</button>` : '<div>✓</div>'}
+    </div>
+  `).join('');
+}
+
+function comprarEmoji(id) {
+  const emoji = EMOJI_SHOP.find(e => e.id === id);
+  if(!emoji || estado.coins < emoji.precio) return;
+  estado.coins -= emoji.precio;
+  estado.emojis.push(id);
+  guardar();
+  actualizarCoins();
+  cargarTienda();
+}
+
+// TIPS
+function cargarTips() {
+  const lista = document.getElementById('tips-lista');
+  if(!lista) return;
+
+  lista.innerHTML = TIPS.map(t => `
+    <div class="card">
+      <div style="font-size:32px">${t.emoji}</div>
+      <p>${t.txt}</p>
+    </div>
+  `).join('');
+}
