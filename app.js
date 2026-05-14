@@ -187,17 +187,78 @@ const EMOJI_SHOP = [
 ];
 
 const TIPS = [
+  // Distancia y velocidad
   {emoji:'🧠',txt:'Regla de los 2 segundos: mantén distancia con el de delante'},
   {emoji:'👀',txt:'Mira 12 segundos adelante, no solo el coche de enfrente'},
-  {emoji:'🛑',txt:'En STOP cuenta hasta 3 antes de arrancar'},
-  {emoji:'💡',txt:'Luces de cruce de día = te ven 3x mejor'},
-  {emoji:'📱',txt:'Móvil = 23x más riesgo. Modo avión al conducir'},
-  {emoji:'🛞',txt:'Presión baja = +10% consumo y riesgo de reventón'},
   {emoji:'🌧️',txt:'Lluvia: aumenta distancia x2 y reduce velocidad 20%'},
+  {emoji:'🌙',txt:'De noche reduce velocidad un 20%. El campo visual se reduce'},
+  {emoji:'🚗',txt:'Adelanta solo cuando veas 200m libres en sentido contrario'},
+  {emoji:'🚛',txt:'Camión delante: déjalo adelantar. Tarda menos y es más seguro'},
+  {emoji:'💨',txt:'Viento lateral: sujeta el volante firme con las dos manos'},
+  {emoji:'🧊',txt:'Hielo negro: no frenes ni gires brusco. Suelta el acelerador'},
+  {emoji:'🌫️',txt:'Niebla: antiniebla delantera y trasera. Nunca las largas'},
+  {emoji:'⛽',txt:'Sin gasolina en autovía = multa. Llena antes de salir'},
+
+  // Seguridad y distracciones
+  {emoji:'📱',txt:'Móvil = 23x más riesgo. Modo avión al conducir'},
+  {emoji:'🎧',txt:'Auriculares prohibidos. Multa de 200€ y 3 puntos'},
   {emoji:'😴',txt:'Cansado = mismo riesgo que alcohol. Para cada 2h'},
+  {emoji:'🍺',txt:'0.0 alcohol para noveles y profesionales. No arriesgues'},
+  {emoji:'💊',txt:'Algunos medicamentos dan positivo en test. Lee el prospecto'},
+  {emoji:'🍔',txt:'Comer conduciendo distrae. Para si tienes hambre'},
+  {emoji:'👶',txt:'Niño en coche: sillita homologada según peso y altura'},
+  {emoji:'🐕',txt:'Mascota suelta = multa 100€. Debe ir en transportín o arnés'},
+  {emoji:'🧳',txt:'Carga mal sujeta: multa y riesgo de accidente'},
+  {emoji:'☀️',txt:'Gafas de sol polarizadas quitan reflejos y fatiga visual'},
+
+  // Normas y señales
+  {emoji:'🛑',txt:'En STOP cuenta hasta 3 antes de arrancar'},
+  {emoji:'🔄',txt:'Glorieta: carril derecho para salir, izquierdo para seguir'},
   {emoji:'🚸',txt:'En zona escolar reduce a 20 km/h siempre'},
-  {emoji:'🔄',txt:'Glorieta: carril derecho para salir, izquierdo para seguir'}
-];
+  {emoji:'⚠️',txt:'Señal de peligro: reduce y prepárate para frenar siempre'},
+  {emoji:'🚨',txt:'Vehículo de emergencia: facilita el paso aunque tengas prioridad'},
+  {emoji:'🅿️',txt:'Aparca en bajada con ruedas giradas a la acera. En subida, al contrario'},
+  {emoji:'🛣️',txt:'Línea continua: no adelantar nunca. Ni siquiera a ciclistas'},
+  {emoji:'🚦',txt:'Ambar no es acelerar. Es frenar si puedes hacerlo con seguridad'},
+  {emoji:'🛑',txt:'Semáforo apagado = considéralo como STOP'},
+  {emoji:'🚫',txt:'Prohibido parar en vados, pasos de peatones y carriles bus'},
+
+  // Mecánica y mantenimiento
+  {emoji:'🛞',txt:'Presión baja = +10% consumo y riesgo de reventón'},
+  {emoji:'🛢️',txt:'Revisa aceite cada 1000 km. Motor gripado = motor muerto'},
+  {emoji:'💧',txt:'Nivel anticongelante bajo = motor se calienta y rompe'},
+  {emoji:'🔋',txt:'Batería dura 4-5 años. Si falla en frío, cámbiala'},
+  {emoji:'� fr',txt:'Pastillas de freno: si chirrían, cámbialas ya'},
+  {emoji:'💡',txt:'Luces fundidas = multa 200€. Revísalas cada semana'},
+  {emoji:'🌡️',txt:'Testigo motor naranja: ve al taller. Rojo: para ya'},
+  {emoji:'🔧',txt:'Vibración a 100 km/h = equilibrado. No lo dejes'},
+  {emoji:'💨',txt:'Humo blanco frío es normal. Si persiste, junta de culata'},
+  {emoji:'🔋',txt:'Coche eléctrico: frena antes. El freno motor regenera batería'},
+
+  // Clima y conducción adversa
+  {emoji:'🌧️',txt:'Carretera mojada tras sequía es más peligrosa por el aceite'},
+  {emoji:'❄️',txt:'Nieve: cadenas o neumáticos de invierno obligatorios'},
+  {emoji:'🌬️',txt:'Ráfagas de viento: suelta el acelerador y sujeta fuerte'},
+  {emoji:'🌊',txt:'Charcos grandes: reduce velocidad para evitar aquaplaning'},
+  {emoji:'🌡️',txt:'Calor extremo: revisa presión neumáticos antes de salir'},
+  {emoji:'🌪️',txt:'Granizo: para bajo un puente o lugar seguro'},
+  {emoji:'🌅',txt:'Sol de frente: usa visera y reduce velocidad'},
+  {emoji:'🌃',txt:'Conduce con más distancia de noche. Ves la mitad'},
+  {emoji:'🏔️',txt:'Bajadas largas: usa freno motor, no solo el pedal'},
+  {emoji:'🏜️',txt:'Polvo y arena reducen agarre. Suaviza todos los movimientos'},
+
+  // Primeros auxilios y averías
+  {emoji:'🆘',txt:'Avería en autovía: arcén, chaleco, triángulos a 50m y 100m'},
+  {emoji:'🚑',txt:'Accidente con heridos: PAS. Proteger, Avisar, Socorrer'},
+  {emoji:'🩸',txt:'Hemorragia grave: presión directa con paño limpio'},
+  {emoji:'😵',txt:'Inconsciente que respira: posición lateral de seguridad'},
+  {emoji:'🔥',txt:'Incendio motor: no abras el capó. Usa extintor por la rendija'},
+  {emoji:'🛠️',txt:'Reventón delantero: sujeta volante y desacelera suave'},
+  {emoji:'⚡',txt:'Fallo frenos: freno motor y freno de mano progresivo'},
+  {emoji:'🔒',txt:'Atrapado en coche: rompe ventanilla lateral, no el parabrisas'},
+  {emoji:'📞',txt:'112 funciona sin cobertura. Guarda tu ubicación'},
+  {emoji:'🧯',txt:'Extintor en coche no es obligatorio, pero salva vidas'}
+];   
 
 let estado = {
   coins: parseInt(localStorage.getItem('gd_coins')) || 0,
