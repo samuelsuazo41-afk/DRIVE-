@@ -542,8 +542,12 @@ function cargarTips() {
   const lista = document.getElementById('tips-lista');
   if(!lista) return;
 
-  lista.innerHTML = TIPS.map(t => `
-    <div class="card">
+  // Mezcla y coge 6 tips aleatorios cada vez
+  const tipsMezclados = [...TIPS].sort(() => 0.5 - Math.random());
+  const tipsAMostrar = tipsMezclados.slice(0, 6);
+
+  lista.innerHTML = tipsAMostrar.map(t => `
+    <div class="card" style="animation:fadeIn 0.4s">
       <div style="font-size:32px">${t.emoji}</div>
       <p>${t.txt}</p>
     </div>
