@@ -1,24 +1,17 @@
-const CACHE_NAME = 'gasdrive-v7.1';
+const CACHE_NAME = 'gasdrive-v7.2';
 const urlsToCache = [
   './',
   './index.html',
   './app.js',
-  './manifest.json'
+  './manifest.json',
+  './preguntas.json'
 ];
 
 self.addEventListener('install', event => {
   event.waitUntil(
     caches.open(CACHE_NAME)
       .then(cache => cache.addAll(urlsToCache))
-  );
-});
-
-self.addEventListener('fetch', event => {
-  event.respondWith(
-    caches.match(event.request)
-      .then(response => {
-        return response || fetch(event.request);
-      })
+      .then(() => self.skipWaiting())
   );
 });
 
@@ -32,6 +25,18 @@ self.addEventListener('activate', event => {
           }
         })
       );
-    })
+    }).then(() => self.clients.claim())
+  );
+});
+
+self.addEventListener('fetch', event => {
+  event.respondWith(
+    caches.match(event.request)
+      .then(response => {
+        return response || fetch(event.request).catch(() => {
+          // Si falla el fetch, devuelve la página principal
+          return caches.match('./index.html');
+        });
+      })
   );
 });
