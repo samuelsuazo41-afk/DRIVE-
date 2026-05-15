@@ -726,27 +726,83 @@ if (Notification.permission === 'granted') {
   programarNotificacionesDiarias();
 }
 
-// 4. Mensajes por evento - llámalos donde necesites en tu código
+// 40 frases de motivación - se rotan automáticamente
+const FRASES_MOTIVACION = [
+  "☀️ Buenos días - 10 preguntas y hoy estás más cerca del carnet.",
+  "🌙 Hora de estudiar - 5 min ahora = 0 fallos mañana.",
+  "💪 La racha no se mantiene sola. Abre GasDrive.",
+  "🎯 Hoy tocan señales. Mátalas.",
+  "🚗 Cada test te acerca al aprobado. Haz 1 más.",
+  "⚡ 2 min de estudio > 0 min de excusas.",
+  "🏆 Los que aprueban no son más listos. Son más constantes.",
+  "🔥 No pierdas la racha de hoy.",
+  "🧠 Tu cerebro retiene mejor con repasos cortos. Empieza ya.",
+  "💯 27/30 es el objetivo. Vamos a por ello.",
+  "📚 Sin test hoy, mañana te arrepientes.",
+  "😎 El carnet no se saca solo. Muevete.",
+  "🎉 Imagina aprobar. Ahora trabaja para ello.",
+  "🚀 1 test = +10 puntos. Fácil.",
+  "💎 La constancia gana a la inteligencia.",
+  "⛔ No dejes para mañana lo que puedes aprobar hoy.",
+  "🌟 Hoy es día de mejorar en normas.",
+  "💥 Destrúyete 10 preguntas de mecánica.",
+  "👑 Los aprobados se hacen de noche. Tú eliges.",
+  "✅ Marca el check de hoy. Entra a GasDrive.",
+  "🎯 Falla hoy para no fallar en el examen real.",
+  "💪 Dolor de estudiar ahora, orgullo después.",
+  "🏎️ Tu garage te espera. Gánate el siguiente coche.",
+  "🧠 Memoria a corto plazo: repasa lo de ayer.",
+  "🔥 Si paras hoy, empiezas de cero mañana.",
+  "📈 Progreso diario > motivación puntual.",
+  "🚫 Sin excusas. 5 preguntas son 2 min.",
+  "💯 380 preguntas te esperan. Atácalas.",
+  "😎 Mientras otros procrastinan, tú avanzas.",
+  "🎉 Cada acierto es dinero ahorrado en la autoescuela.",
+  "⚡ Modo examen activado. Solo 10 min.",
+  "🏆 El aprobado huele a café y a test nocturnos.",
+  "💎 Disciplina > motivación. Entra ahora.",
+  "🚗 Mañana estarás orgulloso de haber estudiado hoy.",
+  "🔥 Si duele, significa que funciona.",
+  "📚 Repite las que fallaste ayer.",
+  "🎯 Enfócate. 15 min sin móvil.",
+  "💪 Eres más fuerte que tu pereza.",
+  "🌙 Última oportunidad del día. Hazlo.",
+  "✅ Check diario hecho. Cierra el día bien."
+];
 
-function notifRachaRota(rachaAnterior) {
-  if (rachaAnterior > 3) {
-    notificacionLocal('🔥 Racha rota', `Llevabas ${rachaAnterior} días seguidos. Vuelve y retómala ahora`);
+function programarNotificacionesDiarias() {
+  if (localStorage.getItem('notifsProgramadas') === 'true') return;
+  if (Notification.permission!== 'granted') return;
+
+  let indice = parseInt(localStorage.getItem('notifIndice') || '0');
+
+  function calcularDelay(hora, minuto) {
+    const ahora = new Date();
+    const objetivo = new Date();
+    objetivo.setHours(hora, minuto, 0, 0);
+    if (objetivo <= ahora) objetivo.setDate(objetivo.getDate() + 1);
+    return objetivo.getTime() - ahora.getTime();
   }
-}
 
-function notifCocheDesbloqueado(nombreCoche) {
-  notificacionLocal('🏎️ Coche desbloqueado', `Has conseguido el ${nombreCoche}. Ve al garage`);
-}
-
-function notifRecordatorio24h() {
-  const ultimaEntrada = localStorage.getItem('ultimaEntrada');
-  const ahora = Date.now();
-  
-  if (!ultimaEntrada || ahora - ultimaEntrada > 24 * 60 * 60 * 1000) {
-    notificacionLocal('📚 Te esperamos', 'Haz 1 test rápido y mantén tu progreso');
-    localStorage.setItem('ultimaEntrada', ahora);
+  function enviarNotificacion() {
+    const frase = FRASES_MOTIVACION[indice % FRASES_MOTIVACION.length];
+    const partes = frase.split(' - ');
+    notificacionLocal(partes[0], partes[1]);
+    indice++;
+    localStorage.setItem('notifIndice', indice);
   }
-}
 
-// 5. Llama a notifRecordatorio24h() cada vez que abra la app
-notifRecordatorio24h();
+  // 8:00 AM
+  setTimeout(() => {
+    enviarNotificacion();
+    setInterval(enviarNotificacion, 24 * 60 * 60 * 1000);
+  }, calcularDelay(8, 0));
+
+  // 19:00 PM
+  setTimeout(() => {
+    enviarNotificacion();
+    setInterval(enviarNotificacion, 24 * 60 * 60 * 1000);
+  }, calcularDelay(19, 0));
+
+  localStorage.setItem('notifsProgramadas', 'true');
+} 
