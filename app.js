@@ -248,7 +248,7 @@ function init() {
   cargarPregunta('normas');
   cargarPregunta('mecanica');
   cargarSituacion('clima');
-  
+
   // Pedir permiso de notificaciones OneSignal
   if('Notification' in window && Notification.permission === 'default') {
     setTimeout(() => {
@@ -257,8 +257,10 @@ function init() {
           await OneSignal.Slidedown.promptActionCategories();
         });
       }
-    }, 3000); // Espera 3 seg para no molestar al cargar
+    }, 3000);
   }
+
+  programarNotificacionesDiarias();
 }
 
 function guardar() {
@@ -370,6 +372,7 @@ function responderTest(cat, idx, el) {
     document.getElementById(`test-${cat}-feedback`).textContent = '❌ FALLO';
     mostrarEmoji(false, el);
     s.racha = 0;
+    notifRachaRota(s.racha);
   }
 
   document.getElementById(`btn-sig-test-${cat}`).disabled = false;
@@ -449,11 +452,11 @@ function siguienteSituacion(cat) {
 // EXAMEN DGT 2026 - 30 PREGUNTAS ROTATIVAS DE 380
 function iniciarExamen() {
   const todas = [
-   ...PREGUNTAS.general,
-   ...PREGUNTAS.señales,
-   ...PREGUNTAS.normas,
-   ...PREGUNTAS.mecanica,
-   ...SITUACIONES.clima
+  ...PREGUNTAS.general,
+  ...PREGUNTAS.señales,
+  ...PREGUNTAS.normas,
+  ...PREGUNTAS.mecanica,
+  ...SITUACIONES.clima
   ];
 
   if(todas.length < 30) {
@@ -492,6 +495,7 @@ function cargarPreguntaExamen() {
   if(estado.examen.indice >= 30) return finalizarExamen();
 
   const p = estado.examen.preguntas[estado.examen.indice];
+  document.getElementById('examen-num').textContent = estado.examen.indice + 1;
   document.getElementById('examen-num').textContent = estado.examen.indice + 1;
   document.getElementById('examen-aciertos').textContent = estado.examen.aciertos;
   document.getElementById('examen-pregunta').textContent = p.q;
@@ -594,6 +598,7 @@ function comprarCoche(id) {
   if(!coche || estado.coins < coche.precio) return;
   estado.coins -= coche.precio;
   estado.coches.push(id);
+  notifCocheDesbloqueado(coche.nombre);
   guardar();
   actualizarCoins();
   cargarGarage();
@@ -690,42 +695,6 @@ function notificacionLocal(titulo, mensaje) {
   });
 }
 
-// 3. Programar 2 notificaciones diarias
-function programarNotificacionesDiarias() {
-  if (localStorage.getItem('notifsProgramadas') === 'true') return;
-
-  function calcularDelay(hora, minuto) {
-    const ahora = new Date();
-    const objetivo = new Date();
-    objetivo.setHours(hora, minuto, 0, 0);
-    if (objetivo <= ahora) objetivo.setDate(objetivo.getDate() + 1);
-    return objetivo.getTime() - ahora.getTime();
-  }
-
-  // 8:00 AM - Motivación matutina
-  setTimeout(() => {
-    notificacionLocal('☀️ Buenos días', '1 test rápido y mantienes tu racha intacta');
-    setInterval(() => {
-      notificacionLocal('☀️ Buenos días', '1 test rápido y mantienes tu racha intacta');
-    }, 24 * 60 * 60 * 1000);
-  }, calcularDelay(8, 0));
-
-  // 19:00 PM - Motivación nocturna
-  setTimeout(() => {
-    notificacionLocal('🌙 Hora de estudiar', '5 preguntas antes de dormir y mañana estás más cerca');
-    setInterval(() => {
-      notificacionLocal('🌙 Hora de estudiar', '5 preguntas antes de dormir y mañana estás más cerca');
-    }, 24 * 60 * 60 * 1000);
-  }, calcularDelay(19, 0));
-
-  localStorage.setItem('notifsProgramadas', 'true');
-}
-
-// Activar programación si hay permiso
-if (Notification.permission === 'granted') {
-  programarNotificacionesDiarias();
-}
-
 // 40 frases de motivación - se rotan automáticamente
 const FRASES_MOTIVACION = [
   "☀️ Buenos días - 10 preguntas y hoy estás más cerca del carnet.",
@@ -805,4 +774,28 @@ function programarNotificacionesDiarias() {
   }, calcularDelay(19, 0));
 
   localStorage.setItem('notifsProgramadas', 'true');
-} 
+}
+
+// 4. Mensajes por evento
+function notifRachaRota(rachaAnterior) {
+  if (rachaAnterior > 3) {
+    notificacionLocal('🔥 Racha rota', `Llevabas ${rachaAnterior} días seguidos. Vuelve y retómala ahora`);
+  }
+}
+
+function notifCocheDesbloqueado(nombreCoche) {
+  notificacionLocal('🏎️ Coche desbloqueado', `Has conseguido el ${nombreCoche}. Ve al garage`);
+}
+
+function notifRecordatorio24h() {
+  const ultimaEntrada = localStorage.getItem('ultimaEntrada');
+  const ahora = Date.now();
+  
+  if (!ultimaEntrada || ahora - ultimaEntrada > 24 * 60 * 60 * 1000) {
+    notificacionLocal('📚 Te esperamos', 'Haz 1 test rápido y mantén tu progreso');
+    localStorage.setItem('ultimaEntrada', ahora);
+  }
+}
+
+// 5. Llama a notifRecordatorio24h() cada vez que abra la app
+notifRecordatorio24h();
