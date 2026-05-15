@@ -1,5 +1,5 @@
 // GASDRIVE V7.5 - 380 PREGUNTAS DGT 2026
-const VERSION = "7.8";
+const VERSION = "7.9";
 
 // COMBO DOPAMINA
 const EMOJIS_ACIERTO = ['🚀','💎','👑','🔥','💯','⚡','🏆','🦄','🤑','✅','💪','😎','🎯','💥','🌟','🎉'];
