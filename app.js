@@ -668,3 +668,85 @@ function actualizarMensajeMotivacional() {
   const el = document.getElementById('motivacion');
   if (el) el.textContent = msg;
 }
+
+// 1. Pedir permiso al abrir la app
+if ('Notification' in window && Notification.permission === 'default') {
+  Notification.requestPermission();
+}
+
+// 2. Función base para mandar notificaciones
+function notificacionLocal(titulo, mensaje) {
+  if (Notification.permission !== 'granted') return;
+  
+  navigator.serviceWorker.ready.then(registration => {
+    registration.showNotification(titulo, {
+      body: mensaje,
+      icon: '/DRIVE-/icon-192.png',
+      badge: '/DRIVE-/icon-192.png',
+      vibrate: [200, 100, 200],
+      tag: 'gasdrive-motivation',
+      renotify: true
+    });
+  });
+}
+
+// 3. Programar 2 notificaciones diarias
+function programarNotificacionesDiarias() {
+  if (localStorage.getItem('notifsProgramadas') === 'true') return;
+
+  function calcularDelay(hora, minuto) {
+    const ahora = new Date();
+    const objetivo = new Date();
+    objetivo.setHours(hora, minuto, 0, 0);
+    if (objetivo <= ahora) objetivo.setDate(objetivo.getDate() + 1);
+    return objetivo.getTime() - ahora.getTime();
+  }
+
+  // 8:00 AM - Motivación matutina
+  setTimeout(() => {
+    notificacionLocal('☀️ Buenos días', '1 test rápido y mantienes tu racha intacta');
+    setInterval(() => {
+      notificacionLocal('☀️ Buenos días', '1 test rápido y mantienes tu racha intacta');
+    }, 24 * 60 * 60 * 1000);
+  }, calcularDelay(8, 0));
+
+  // 19:00 PM - Motivación nocturna
+  setTimeout(() => {
+    notificacionLocal('🌙 Hora de estudiar', '5 preguntas antes de dormir y mañana estás más cerca');
+    setInterval(() => {
+      notificacionLocal('🌙 Hora de estudiar', '5 preguntas antes de dormir y mañana estás más cerca');
+    }, 24 * 60 * 60 * 1000);
+  }, calcularDelay(19, 0));
+
+  localStorage.setItem('notifsProgramadas', 'true');
+}
+
+// Activar programación si hay permiso
+if (Notification.permission === 'granted') {
+  programarNotificacionesDiarias();
+}
+
+// 4. Mensajes por evento - llámalos donde necesites en tu código
+
+function notifRachaRota(rachaAnterior) {
+  if (rachaAnterior > 3) {
+    notificacionLocal('🔥 Racha rota', `Llevabas ${rachaAnterior} días seguidos. Vuelve y retómala ahora`);
+  }
+}
+
+function notifCocheDesbloqueado(nombreCoche) {
+  notificacionLocal('🏎️ Coche desbloqueado', `Has conseguido el ${nombreCoche}. Ve al garage`);
+}
+
+function notifRecordatorio24h() {
+  const ultimaEntrada = localStorage.getItem('ultimaEntrada');
+  const ahora = Date.now();
+  
+  if (!ultimaEntrada || ahora - ultimaEntrada > 24 * 60 * 60 * 1000) {
+    notificacionLocal('📚 Te esperamos', 'Haz 1 test rápido y mantén tu progreso');
+    localStorage.setItem('ultimaEntrada', ahora);
+  }
+}
+
+// 5. Llama a notifRecordatorio24h() cada vez que abra la app
+notifRecordatorio24h();
