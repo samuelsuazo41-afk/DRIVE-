@@ -248,6 +248,17 @@ function init() {
   cargarPregunta('normas');
   cargarPregunta('mecanica');
   cargarSituacion('clima');
+  
+  // Pedir permiso de notificaciones OneSignal
+  if('Notification' in window && Notification.permission === 'default') {
+    setTimeout(() => {
+      if(window.OneSignalDeferred) {
+        OneSignalDeferred.push(async function(OneSignal) {
+          await OneSignal.Slidedown.promptActionCategories();
+        });
+      }
+    }, 3000); // Espera 3 seg para no molestar al cargar
+  }
 }
 
 function guardar() {
