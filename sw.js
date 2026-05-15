@@ -1,4 +1,4 @@
-const CACHE_NAME = 'gasdrive-v7.9';
+const CACHE_NAME = 'gasdrive-v7.10';
 const urlsToCache = [
   '/',
   '/index.html',
