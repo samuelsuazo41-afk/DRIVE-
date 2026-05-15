@@ -218,7 +218,8 @@ let estado = {
     general: {idx:0,aciertos:0,racha:0,score:0},
     señales: {idx:0,aciertos:0,racha:0,score:0},
     normas: {idx:0,aciertos:0,racha:0,score:0},
-    mecanica: {idx:0,aciertos:0,racha:0,score:0},
+    mecanica: {idx:0,aciertos:0,racha:0,score:0}
+  }, // <- CERRAR AQUÍ y poner coma
   examen: {
     activa: false,
     preguntas: [],
@@ -226,7 +227,7 @@ let estado = {
     aciertos: 0,
     timer: null,
     tiempo: 1800
-},
+  },
   sit: {
     clima: {idx:0,aciertos:0,score:0}
   }
