@@ -160,6 +160,17 @@ body {
  100% { transform: translateY(-50%) scale(1); }
 }
 </style>
+
+<!-- ONESIGNAL V7.6 -->
+<script src="https://cdn.onesignal.com/sdks/web/v16/OneSignalSDK.page.es6.js" async></script>
+<script>
+  window.OneSignalDeferred = window.OneSignalDeferred || [];
+  OneSignalDeferred.push(async function(OneSignal) {
+    await OneSignal.init({
+      appId: "3ede81c4-7cbc-47fb-b1cf-eb1883619fc4",
+    });
+  });
+</script>
 </head>
 <body>
 
@@ -310,17 +321,5 @@ body {
 </div>
 
 <script src="app.js"></script>
-
-<!-- ONESIGNAL V7.6 - PEGA TU APP ID AQUÍ -->
-<script src="https://cdn.onesignal.com/sdks/web/v16/OneSignalSDK.page.es6.js" async></script>
-<script>
-  window.OneSignalDeferred = window.OneSignalDeferred || [];
-  OneSignalDeferred.push(async function(OneSignal) {
-    await OneSignal.init({
-      appId: "TU_APP_ID_AQUI",
-    });
-  });
-</script>
-
 </body>
 </html>
