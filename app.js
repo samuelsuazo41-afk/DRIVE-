@@ -1,11 +1,11 @@
-// GASDRIVE V7.4 - 300 PREGUNTAS DGT 2026
-const VERSION = "7.4";
+// GASDRIVE V7.5 - 380 PREGUNTAS DGT 2026
+const VERSION = "7.5";
 
 // COMBO DOPAMINA
 const EMOJIS_ACIERTO = ['🚀','💎','👑','🔥','💯','⚡','🏆','🦄','🤑','✅','💪','😎','🎯','💥','🌟','🎉'];
 const EMOJIS_FALLO = ['❌','💀','😭','⛔','💔','😵','🤦','🚫','💩','🤡','💥','😤'];
 
-// 300 PREGUNTAS TEST DGT - 80+80+80+60
+// 300 PREGUNTAS TEST DGT
 const PREGUNTAS = {
   general: [
     {q:"¿Velocidad máxima en zona urbana?",a:["30 km/h","50 km/h","60 km/h"],ok:1},
@@ -219,7 +219,7 @@ let estado = {
     señales: {idx:0,aciertos:0,racha:0,score:0},
     normas: {idx:0,aciertos:0,racha:0,score:0},
     mecanica: {idx:0,aciertos:0,racha:0,score:0}
-  }, // <- CERRAR AQUÍ y poner coma
+  },
   examen: {
     activa: false,
     preguntas: [],
@@ -234,11 +234,21 @@ let estado = {
 };
 
 // INICIO AUTOMÁTICO
-window.onload = function() {
-  console.log("GasDrive V7.3 cargado");
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', init);
+} else {
+  init();
+}
+
+function init() {
+  console.log("GasDrive V7.5 cargado");
   actualizarCoins();
   cargarPregunta('general');
-};
+  cargarPregunta('señales');
+  cargarPregunta('normas');
+  cargarPregunta('mecanica');
+  cargarSituacion('clima');
+}
 
 function guardar() {
   localStorage.setItem('gd_coins', estado.coins);
@@ -262,12 +272,10 @@ function cambiarTab(tab) {
   if(tab === 'garage') cargarGarage();
   if(tab === 'tienda') cargarTienda();
   if(tab === 'tips') cargarTips();
-
   if(tab === 'test'){
     actualizarMensajeMotivacional();
     cargarPregunta('general');
   }
-
   if(tab === 'situaciones') {
     cargarSituacion('clima');
   }
@@ -427,6 +435,120 @@ function siguienteSituacion(cat) {
   cargarSituacion(cat);
 }
 
+// EXAMEN DGT 2026 - 30 PREGUNTAS ROTATIVAS DE 380
+function iniciarExamen() {
+  const todas = [
+   ...PREGUNTAS.general,
+   ...PREGUNTAS.señales,
+   ...PREGUNTAS.normas,
+   ...PREGUNTAS.mecanica,
+   ...SITUACIONES.clima
+  ];
+
+  if(todas.length < 30) {
+    alert('Faltan preguntas. Necesitas 30 mínimo.');
+    return;
+  }
+
+  estado.examen.preguntas = todas.sort(() => 0.5 - Math.random()).slice(0, 30);
+  estado.examen.activa = true;
+  estado.examen.indice = 0;
+  estado.examen.aciertos = 0;
+
+  document.getElementById('btn-iniciar-examen').style.display = 'none';
+  document.getElementById('btn-sig-examen').style.display = 'block';
+
+  iniciarTimerExamen();
+  cargarPreguntaExamen();
+}
+
+function iniciarTimerExamen() {
+  clearInterval(estado.examen.timer);
+  estado.examen.tiempo = 1800;
+
+  estado.examen.timer = setInterval(() => {
+    estado.examen.tiempo--;
+    const min = Math.floor(estado.examen.tiempo / 60);
+    const seg = estado.examen.tiempo % 60;
+    document.getElementById('examen-timer').textContent =
+      `${min.toString().padStart(2,'0')}:${seg.toString().padStart(2,'0')}`;
+
+    if(estado.examen.tiempo <= 0) finalizarExamen();
+  }, 1000);
+}
+
+function cargarPreguntaExamen() {
+  if(estado.examen.indice >= 30) return finalizarExamen();
+
+  const p = estado.examen.preguntas[estado.examen.indice];
+  document.getElementById('examen-num').textContent = estado.examen.indice + 1;
+  document.getElementById('examen-aciertos').textContent = estado.examen.aciertos;
+  document.getElementById('examen-pregunta').textContent = p.q;
+  document.getElementById('examen-progress').style.width = `${(estado.examen.indice/30)*100}%`;
+
+  const opcionesDiv = document.getElementById('examen-opciones');
+  opcionesDiv.innerHTML = '';
+
+    p.a.forEach((op, i) => {
+    const div = document.createElement('div');
+    div.className = 'opcion';
+    div.textContent = op;
+    div.onclick = () => responderExamen(i, div);
+    opcionesDiv.appendChild(div);
+  });
+  
+  document.getElementById('btn-sig-examen').disabled = true;
+}
+
+function responderExamen(idx, el) {
+  if(el.classList.contains('bloqueada')) return;
+  
+  const p = estado.examen.preguntas[estado.examen.indice];
+  document.querySelectorAll('#examen-opciones .opcion').forEach(o => o.classList.add('bloqueada'));
+  
+  const correcta = idx === p.ok;
+  if(correcta) {
+    el.classList.add('correcta');
+    estado.examen.aciertos++;
+  } else {
+    el.classList.add('incorrecta');
+    document.querySelectorAll('#examen-opciones .opcion')[p.ok].classList.add('correcta');
+  }
+  
+  document.getElementById('btn-sig-examen').disabled = false;
+}
+
+function siguientePreguntaExamen() {
+  estado.examen.indice++;
+  cargarPreguntaExamen();
+}
+
+function finalizarExamen() {
+  clearInterval(estado.examen.timer);
+  estado.examen.activa = false;
+  
+  const aprobado = estado.examen.aciertos >= 27;
+  document.getElementById('examen-resultado').style.display = 'block';
+  document.getElementById('examen-resultado').innerHTML = `
+    <h2>${aprobado ? '✅ APROBADO' : '❌ SUSPENDIDO'}</h2>
+    <p>Aciertos: ${estado.examen.aciertos}/30</p>
+    <button class="btn" onclick="reiniciarExamen()">Reintentar</button>
+  `;
+  
+  if(aprobado) estado.coins += 100;
+  guardar();
+  actualizarCoins();
+}
+
+function reiniciarExamen() {
+  document.getElementById('examen-resultado').style.display = 'none';
+  document.getElementById('btn-iniciar-examen').style.display = 'block';
+  document.getElementById('btn-sig-examen').style.display = 'none';
+  document.getElementById('examen-timer').textContent = '30:00';
+  document.getElementById('examen-pregunta').textContent = 'Pulsa Iniciar Examen';
+  document.getElementById('examen-opciones').innerHTML = '';
+}
+
 // GARAGE
 function cargarGarage() {
   const lista = document.getElementById('garage-lista');
@@ -506,7 +628,6 @@ function cargarTips() {
   const lista = document.getElementById('tips-lista');
   if(!lista) return;
 
-  // Mezcla y coge 6 tips aleatorios cada vez
   const tipsMezclados = [...TIPS].sort(() => 0.5 - Math.random());
   const tipsAMostrar = tipsMezclados.slice(0, 6);
 
