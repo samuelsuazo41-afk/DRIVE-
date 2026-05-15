@@ -1,5 +1,5 @@
 // GASDRIVE V7.5 - 380 PREGUNTAS DGT 2026
-const VERSION = "7.7";
+const VERSION = "7.6";
 
 // COMBO DOPAMINA
 const EMOJIS_ACIERTO = ['🚀','💎','👑','🔥','💯','⚡','🏆','🦄','🤑','✅','💪','😎','🎯','💥','🌟','🎉'];
@@ -500,29 +500,6 @@ function cargarPreguntaExamen() {
   const opcionesDiv = document.getElementById('examen-opciones');
   opcionesDiv.innerHTML = '';
 
-    p.a.forEach((op, i) => {
-    const div = document.createElement('div');
-    div.className = 'opcion';
-    div.textContent = op;
-    div.onclick = () => responderExamen(i, div);
-    opcionesDiv.appendChild(div);
-  });
-  
-  document.getElementById('btn-sig-examen').disabled = true;
-}
-
-function cargarPreguntaExamen() {
-  if(estado.examen.indice >= 30) return finalizarExamen();
-
-  const p = estado.examen.preguntas[estado.examen.indice];
-  document.getElementById('examen-num').textContent = estado.examen.indice + 1;
-  document.getElementById('examen-aciertos').textContent = estado.examen.aciertos;
-  document.getElementById('examen-pregunta').textContent = p.q;
-  document.getElementById('examen-progress').style.width = `${(estado.examen.indice/30)*100}%`;
-
-  const opcionesDiv = document.getElementById('examen-opciones');
-  opcionesDiv.innerHTML = '';
-
   p.a.forEach((op, i) => {
     const div = document.createElement('div');
     div.className = 'opcion';
@@ -534,28 +511,28 @@ function cargarPreguntaExamen() {
   document.getElementById('btn-sig-examen').disabled = true;
 }
 
-function cargarPreguntaExamen() {
-  if(estado.examen.indice >= 30) return finalizarExamen();
-
-  const p = estado.examen.preguntas[estado.examen.indice];
-  document.getElementById('examen-num').textContent = estado.examen.indice + 1;
-  document.getElementById('examen-aciertos').textContent = estado.examen.aciertos;
-  document.getElementById('examen-pregunta').textContent = p.q;
-  document.getElementById('examen-progress').style.width = `${(estado.examen.indice/30)*100}%`;
-
-  const opcionesDiv = document.getElementById('examen-opciones');
-  opcionesDiv.innerHTML = '';
-
-  p.a.forEach((op, i) => {
-    const div = document.createElement('div');
-    div.className = 'opcion';
-    div.textContent = op;
-    div.onclick = () => responderExamen(i, div);
-    opcionesDiv.appendChild(div);
-  });
+function responderExamen(idx, el) {
+  if(el.classList.contains('bloqueada')) return;
   
-  document.getElementById('btn-sig-examen').disabled = true;
-}  // <-- ESTA LLAVE FALTABA
+  const p = estado.examen.preguntas[estado.examen.indice];
+  document.querySelectorAll('#examen-opciones .opcion').forEach(o => o.classList.add('bloqueada'));
+  
+  const correcta = idx === p.ok;
+  if(correcta) {
+    el.classList.add('correcta');
+    estado.examen.aciertos++;
+  } else {
+    el.classList.add('incorrecta');
+    document.querySelectorAll('#examen-opciones .opcion')[p.ok].classList.add('correcta');
+  }
+  
+  document.getElementById('btn-sig-examen').disabled = false;
+}
+
+function siguientePreguntaExamen() {
+  estado.examen.indice++;
+  cargarPreguntaExamen();
+}
 
 function finalizarExamen() {
   clearInterval(estado.examen.timer);
