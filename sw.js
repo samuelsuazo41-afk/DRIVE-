@@ -1,11 +1,11 @@
-const CACHE_NAME = 'gasdrive-v7.8';
+const CACHE_NAME = 'gasdrive-v7.9';
 const urlsToCache = [
-  './',
-  './index.html',
-  './app.js',
-  './manifest.json',
-  './icon-192.png',
-  './icon-512.png'
+  '/',
+  '/index.html',
+  '/app.js',
+  '/manifest.json',
+  '/icon-192.png',
+  '/icon-512.png'
 ];
 
 // INSTALAR y cachear todo
@@ -38,30 +38,30 @@ self.addEventListener('fetch', event => {
     caches.match(event.request)
       .then(response => {
         return response || fetch(event.request).catch(() => {
-          // Si falla y es una página, devuelve index.html
           if (event.request.destination === 'document') {
-            return caches.match('./index.html');
+            return caches.match('/index.html');
           }
         });
       })
   );
 });
 
-// PUSH y NOTIFICATION CLICK igual que lo tienes
+// PUSH
 self.addEventListener('push', event => {
   const data = event.data ? event.data.json() : {};
   const title = data.title || 'GasDrive';
   const options = {
     body: data.body || 'Tienes un mensaje nuevo',
-    icon: './icon-192.png',
-    badge: './icon-192.png',
+    icon: '/icon-192.png',
+    badge: '/icon-192.png',
     tag: data.tag || 'gasdrive-general',
     requireInteraction: true
   };
   event.waitUntil(self.registration.showNotification(title, options));
 });
 
+// CLICK EN NOTIFICACIÓN
 self.addEventListener('notificationclick', event => {
   event.notification.close();
-  event.waitUntil(clients.openWindow('./'));
+  event.waitUntil(clients.openWindow('/'));
 });
